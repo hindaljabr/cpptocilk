@@ -2,11 +2,16 @@ grammar Cilk;
 
 string : '#include <iostream>'
  'using namespace std;'
+ function
   'int main() {' statement 'return 0; }';
+  
+function:  type ID '(' type  ID')' statement ;
 
 statement: labeledstatement
           | selectionstatement
           | iterationstatement
+	  | functionstatement
+	  | compoundstatement
           ;
 
 
@@ -26,6 +31,7 @@ condition:
       | type ID '<' INT
 ;
 
+
 iterationstatement:
 	| For '(' forinitstatement condition? ';' expression? ')' statement
 	| For '(' forrangedeclaration ':' forrangeinitializer ')' statement
@@ -36,14 +42,28 @@ forinitstatement:
 	| simpledeclaration
 ;
 
-expressionstatement
-:
+expressionstatement:
 	expression? ';'
 ;
 
 
+functionstatement: statment 'return' ID 
+		  | statment 'return' INT
+;		  
 
-type: 'Int' | 'String';
+
+compoundstatement:
+	'{' statementseq? '}'
+;
+
+statementseq:
+	statement
+	| statementseq statement
+;
+
+
+type: 'Int' | 'String' | 'void';
+operator: '-' | '*'| '&'| '+'| '!'| '~'| '-';
 ID : [a-zA-Z]+ ;
 INT : [0-9]+;
 WS : [ \t\r\n]+ -> skip ;
