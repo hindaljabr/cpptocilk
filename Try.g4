@@ -16,7 +16,8 @@ statement: labeledstatement
 
 
 labeledstatement:
-	type ID '=' statement
+	type ID '=' statement 
+	| ID operator ID 
 
 ;
 
@@ -47,8 +48,9 @@ expressionstatement:
 ;
 
 
-functionstatement: statment 'return' ID 
-		  | statment 'return' INT
+functionstatement: statment 'return' statment 
+		  | statment 'return' INT ';'
+		  | statment 'return' ID  ';'
 ;		  
 
 
@@ -63,7 +65,7 @@ statementseq:
 
 
 type: 'Int' | 'String' | 'void';
-operator: '-' | '*'| '&'| '+'| '!'| '~'| '-';
+operator: '=' | '*'| '&'| '+'| '-';
 ID : [a-zA-Z]+ ;
 INT : [0-9]+;
 WS : [ \t\r\n]+ -> skip ;
