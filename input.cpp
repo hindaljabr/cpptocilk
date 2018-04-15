@@ -11,16 +11,9 @@ int fib(int n)
 
 int main(int argc, char *argv[])
 {
-
     int n = 39;
 
-
     int result = fib(n);
-
-
-
-    printf("Fibonacci number #%d is %d.\n", n, result);
-
 
     return 0;
 }
